@@ -89,5 +89,11 @@ The modified Qwen2.5-Omni modeling file keeps its upstream Apache-2.0 license he
 
 ## Citation
 
-If this code is used for OmniZip/OmniSIFT research, please cite the corresponding paper or project release when it is available.
-
+```bibtex
+@article{ding2026omnisift,
+  title={OmniSIFT: Modality-Asymmetric Token Compression for Efficient Omni-modal Large Language Models},
+  author={Ding, Yue and Ji, Yiyan and Li, Jungang and Liu, Xuyang and Chen, Xinlong and Wu, Junfei and Li, Bozhou and Zeng, Bohan and Shi, Yang and Guan, Yushuo and others},
+  journal={arXiv preprint arXiv:2602.04804},
+  year={2026}
+}
+```
