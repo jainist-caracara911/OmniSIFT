@@ -1,34 +1,67 @@
-# OmniSIFT
+<h1 align="center">
+  OmniSIFT: Modality-Asymmetric Token Compression for Efficient Omni-modal Large Language Models
+</h1>
 
-OmniSIFT is a lightweight research implementation of audio-video token compression for Qwen2.5-Omni. It keeps the repository focused on the inference-time compression code: the modified Qwen2.5-Omni modeling file, the similarity-based pruning unit, and the Qwen Omni media preprocessing utilities.
+<p align="center">
+  Yue Ding<sup>1,2,*</sup>, Yiyan Ji<sup>3,*</sup>, Jungang Li<sup>4</sup>, Xuyang Liu<sup>5</sup>, Xinlong Chen<sup>1</sup>, Junfei Wu<sup>1</sup>, Bozhou Li<sup>6</sup>, Bohan Zeng<sup>6</sup>, Yang Shi<sup>6</sup>, Yushuo Guan<sup>2</sup>, Yuanxing Zhang<sup>2</sup>, Jiaheng Liu<sup>3</sup>, Qiang Liu<sup>1</sup>, Pengfei Wan<sup>2</sup>, Liang Wang<sup>1</sup>
+</p>
 
-## Repository Layout
+<p align="center">
+  <sup>1</sup>NLPR, Institute of Automation, Chinese Academy of Sciences (CASIA)&nbsp;&nbsp;
+  <sup>2</sup>Kling Team, Kuaishou Technology&nbsp;&nbsp;
+  <sup>3</sup>Nanjing University<br>
+  <sup>4</sup>The Hong Kong University of Science and Technology (Guangzhou)&nbsp;&nbsp;
+  <sup>5</sup>Sichuan University&nbsp;&nbsp;
+  <sup>6</sup>Peking University<br>
+  <sup>*</sup>Equal contribution
+</p>
 
-```text
-OmniSIFT/
-├── omnisift/
-│   ├── compression_units.py          # Similarity-based audio/video pruning
-│   └── modeling_qwen2_5_omni.py      # Qwen2.5-Omni model with compression hooks
-├── qwen-omni-utils/                  # Vendored media preprocessing utilities
-└── evaluation/                       # Placeholder for evaluation scripts
-```
+<p align="center">
+  <em>Video-guided audio and modality-asymmetric omni-token compression for efficient audio-video understanding.</em>
+</p>
+
+<p align="center">
+  <a href="https://arxiv.org/abs/2602.04804"><img src="https://img.shields.io/badge/arXiv-2602.04804-b31b1b.svg" alt="arXiv"></a>
+  <a href="https://arxiv.org/abs/2602.04804"><img src="https://img.shields.io/badge/ICML-2026-orange.svg" alt="ICML 2026"></a>
+  <a href="https://mp.weixin.qq.com/s/49yUBxtEFqdST85g4ROQZQ"><img src="https://img.shields.io/badge/PR-%E9%87%8F%E5%AD%90%E4%BD%8D-8A2BE2.svg" alt="PR"></a>
+  <a href="https://huggingface.co/dingyue1011/OmniSIFT-7B"><img src="https://img.shields.io/badge/Model-OmniSIFT--7B-yellow.svg" alt="Model"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache--2.0-green.svg" alt="License"></a>
+</p>
+
+## Contents
+
+- [News](#-news)
+- [Highlights](#-highlights)
+- [Core Code](#-core-code)
+- [Installation](#installation)
+- [Quick Start](#quick-start)
+- [Compression Parameters](#compression-parameters)
+- [Acknowledgement](#acknowledgement)
+- [Citation](#citation)
+
+## 🔥 News
+
+- `2026.05.01` 🎉🎉 OmniSIFT has been accepted to **ICML 2026**!
+- `2026.02.04` 📄✨ We introduce OmniSIFT, a modality-asymmetric token compression framework for efficient Omni-LLM inference. The paper is available on arXiv: [arXiv:2602.04804](https://arxiv.org/abs/2602.04804).
+
+## 📌 Highlights
+
+OmniSIFT reduces the long audio-video context in Omni-LLMs with a modality-asymmetric design: video tokens are first compressed into informative visual anchors, which then guide audio token compression.
+
+- ⚡ **Video-Guided Modality-Asymmetric Compression:** OmniSIFT treats video and audio tokens asymmetrically, using key video tokens to guide audio token selection for omni-modal token compression.
+- 🎞️ **Spatio-Temporal Video Token Pruning:** The video branch removes redundant patches by combining spatial similarity within frames and temporal similarity across adjacent frames.
+- 🔊 **Cross-Attention Audio Token Selection:** The retained key video tokens act as visual anchors and guide audio compression through cross-attention, preserving audio cues aligned with visual context.
+- 🚀 **Efficient Omni-LLM Inference:** OmniSIFT substantially shortens the multimodal prefill context while maintaining strong audio-video understanding performance.
+
+## 🧱 Core Code
+
+- OmniSIFT compression logic: [`omnisift/compression_units.py`](omnisift/compression_units.py)
+- Qwen2.5-Omni integration with compression hooks: [`omnisift/modeling_qwen2_5_omni.py`](omnisift/modeling_qwen2_5_omni.py)
+- Media preprocessing utilities: [`qwen-omni-utils/`](qwen-omni-utils/)
 
 ## Installation
 
-```bash
-conda create -n omnisift python=3.10 -y
-conda activate omnisift
-pip install --upgrade pip
-
-pip install -e .
-pip install -e qwen-omni-utils
-```
-
-For GPU inference, install the PyTorch build that matches your CUDA runtime. FlashAttention is optional but recommended when your environment supports it:
-
-```bash
-pip install flash-attn --no-build-isolation
-```
+Please follow the environment setup and dependency installation instructions in the official [Qwen2.5-Omni](https://github.com/QwenLM/Qwen2.5-Omni) codebase.
 
 ## Quick Start
 
@@ -58,14 +91,13 @@ messages = [
         "role": "user",
         "content": [
             {"type": "video", "video": "file:///path/to/video.mp4"},
-            {"type": "audio", "audio": "file:///path/to/audio.wav"},
             {"type": "text", "text": "Describe the audio and video."},
         ],
     }
 ]
 
 text = processor.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
-audios, images, videos = process_mm_info(messages, use_audio_in_video=False)
+audios, images, videos = process_mm_info(messages, use_audio_in_video=True)
 inputs = processor(text=text, images=images, videos=videos, audio=audios, padding=True, return_tensors="pt")
 inputs = inputs.to(model.device)
 
@@ -79,13 +111,11 @@ print(response[0])
 `rho_audio` controls the fraction of audio tokens removed within each chunk.
 `rho_video` controls the fraction of video tokens removed from the selected spatial/temporal positions.
 
-Lower values preserve more tokens. Higher values are faster but may reduce answer quality.
+Lower values preserve more tokens. 
 
-## Open Source Notes
+## Acknowledgement
 
-This repository intentionally excludes model weights, datasets, experiment logs, generated caches, and local outputs. Download model weights from their upstream providers according to their licenses.
-
-The modified Qwen2.5-Omni modeling file keeps its upstream Apache-2.0 license header. See [NOTICE](NOTICE) for attribution details.
+Thanks to [Qwen2.5Omni](https://github.com/QwenLM/Qwen2.5-Omni), [ms-swift](https://github.com/modelscope/ms-swift), [OmniZip](https://arxiv.org/abs/2511.14582), [AVoCaDO](https://arxiv.org/abs/2510.10395), [VidCom2](https://arxiv.org/abs/2505.14454), and [TimeChat-Online](https://arxiv.org/abs/2504.17343) for their great work and codebase.
 
 ## Citation
 
