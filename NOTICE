@@ -1,0 +1,11 @@
+OmniSIFT
+
+This repository contains code for audio-video token compression with Qwen2.5-Omni.
+
+Portions of omnisift/modeling_qwen2_5_omni.py are derived from the Qwen2.5-Omni
+implementation in Hugging Face Transformers and retain the upstream copyright
+notice from the Qwen team, Alibaba Group, and the Hugging Face Inc. team.
+
+The qwen-omni-utils directory is derived from Qwen Omni utility code and is
+distributed under the Apache License, Version 2.0.
+

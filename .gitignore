@@ -1,0 +1,60 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.python-version
+.ruff_cache/
+.mypy_cache/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+*.egg
+
+# Environments
+.env
+.env.*
+.venv/
+venv/
+env/
+
+# Notebooks and editors
+.ipynb_checkpoints/
+.DS_Store
+.vscode/
+.idea/
+
+# Logs and experiment outputs
+logs/
+wandb/
+runs/
+outputs/
+results/
+vis_results/
+*.log
+*.jsonl
+
+# Large local assets
+data/
+datasets/
+checkpoints/
+models/
+weights/
+*.pt
+*.pth
+*.ckpt
+*.bin
+*.safetensors
+*.onnx
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.wav
+*.flac
+*.mp3
+
