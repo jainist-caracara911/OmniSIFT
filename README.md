@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/icon.png" width="120" alt="OmniSIFT icon">
+</p>
+
 <h1 align="center">
   OmniSIFT: Modality-Asymmetric Token Compression for Efficient Omni-modal Large Language Models
 </h1>
@@ -32,6 +36,9 @@
 
 - [News](#-news)
 - [Highlights](#-highlights)
+- [Method Overview](#method-overview)
+- [Main Results](#main-results)
+- [Case Study](#case-study)
 - [Core Code](#-core-code)
 - [Installation](#installation)
 - [Quick Start](#quick-start)
@@ -53,6 +60,30 @@ OmniSIFT reduces the long audio-video context in Omni-LLMs with a modality-asymm
 - 🔊 **Cross-Attention Audio Token Selection:** The retained key video tokens act as visual anchors and guide audio compression through cross-attention, preserving audio cues aligned with visual context.
 - 🚀 **Efficient Omni-LLM Inference:** OmniSIFT substantially shortens the multimodal prefill context while maintaining strong audio-video understanding performance.
 
+## Method Overview
+
+OmniSIFT follows a two-stage modality-asymmetric compression pipeline. STVP first removes spatial and temporal redundancy in video tokens to produce compact visual anchors; VGAS then selects audio tokens conditioned on these visual anchors before feeding the compressed multimodal sequence into the LLM backbone.
+
+<p align="center">
+  <img src="assets/method.png" width="95%" alt="OmniSIFT method overview">
+</p>
+
+## Main Results
+
+We evaluate OmniSIFT on Qwen2.5-Omni-7B and Qwen2.5-Omni-3B across multiple audio-video benchmarks under 35% and 25% token retained ratios. OmniSIFT consistently achieves the best performance among compression methods and can match or surpass the full-token baseline in several settings while using much shorter multimodal contexts.
+
+<p align="center">
+  <img src="assets/main_table.png" width="95%" alt="OmniSIFT main results table">
+</p>
+
+## Case Study
+
+This visualization shows how OmniSIFT preserves salient visual dynamics and contextually aligned audio cues under aggressive compression, enabling accurate reasoning over fine-grained audio-video events.
+
+<p align="center">
+  <img src="assets/case_study.png" width="95%" alt="OmniSIFT case study">
+</p>
+
 ## 🧱 Core Code
 
 - OmniSIFT compression logic: [`omnisift/compression_units.py`](omnisift/compression_units.py)
@@ -65,13 +96,15 @@ Please follow the environment setup and dependency installation instructions in 
 
 ## Quick Start
 
+Download the OmniSIFT-7B checkpoint from [Hugging Face](https://huggingface.co/dingyue1011/OmniSIFT-7B), then run inference:
+
 ```python
 import torch
 from transformers import AutoProcessor
 from qwen_omni_utils import process_mm_info
 from omnisift import Qwen2_5OmniForConditionalGeneration
 
-model_path = "Qwen/Qwen2.5-Omni-7B"
+model_path = "dingyue1011/OmniSIFT-7B"
 
 processor = AutoProcessor.from_pretrained(model_path)
 model = Qwen2_5OmniForConditionalGeneration.from_pretrained(
@@ -115,7 +148,7 @@ Lower values preserve more tokens.
 
 ## Acknowledgement
 
-Thanks to [Qwen2.5Omni](https://github.com/QwenLM/Qwen2.5-Omni), [ms-swift](https://github.com/modelscope/ms-swift), [OmniZip](https://arxiv.org/abs/2511.14582), [AVoCaDO](https://arxiv.org/abs/2510.10395), [VidCom2](https://arxiv.org/abs/2505.14454), and [TimeChat-Online](https://arxiv.org/abs/2504.17343) for their great work and codebase.
+Thanks to [Qwen2.5-Omni](https://github.com/QwenLM/Qwen2.5-Omni), [ms-swift](https://github.com/modelscope/ms-swift), [OmniZip](https://arxiv.org/abs/2511.14582), [AVoCaDO](https://arxiv.org/abs/2510.10395), [VidCom2](https://arxiv.org/abs/2505.14454), and [TimeChat-Online](https://arxiv.org/abs/2504.17343) for their great work and codebase.
 
 ## Citation
 
