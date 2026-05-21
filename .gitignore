@@ -58,3 +58,6 @@ weights/
 *.flac
 *.mp3
 
+
+# Evaluation metadata intentionally includes small JSONL files.
+!evaluation/**/*.jsonl
